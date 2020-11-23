@@ -3,14 +3,14 @@ import 'firebase/firestore';
 import 'firebase/auth';
 
 const config = {
-    apiKey: "AIzaSyDdtpr3gZW_vLf82yIs3D2BKrc7yebS4EM",
-    authDomain: "shop-clothes-f0b2c.firebaseapp.com",
-    databaseURL: "https://shop-clothes-f0b2c.firebaseio.com",
-    projectId: "shop-clothes-f0b2c",
-    storageBucket: "shop-clothes-f0b2c.appspot.com",
-    messagingSenderId: "6925731067",
-    appId: "1:6925731067:web:d74d22051466c0ca185c5e",
-    measurementId: "G-6JZNTWN3MV"
+    apiKey: "AIzaSyBcC9RBsQR_IvfM7YohqpCt9sBKGC5RgBk",
+    authDomain: "shop-clothes-db.firebaseapp.com",
+    databaseURL: "https://shop-clothes-db.firebaseio.com",
+    projectId: "shop-clothes-db",
+    storageBucket: "shop-clothes-db.appspot.com",
+    messagingSenderId: "18753139693",
+    appId: "1:18753139693:web:3224bce56f4d239a166de4",
+    measurementId: "G-FWGPV6EYWJ"
   };
 
   firebase.initializeApp(config); 
@@ -22,5 +22,29 @@ const config = {
   provider.setCustomParameters({ prompt: 'select_account' });
 
   export const signInWithGoogle = () => auth.signInWithPopup(provider);
+
+  export const createUserProfileDocument = async (userAuth, additionalData) => {
+    if (!userAuth) return;
+
+    const userRef = firestore.doc(`users/${userAuth.uid}`);
+    const snapShot = await userRef.get();
+
+    if (!snapShot.exists) {
+        const { displayName, email } = userAuth;
+        const createdAt = new Date();
+
+        try {
+            await userRef.set({
+                displayName,
+                email,
+                createdAt,
+                ...additionalData
+            })
+        } catch (err) {
+            console.log(err.message);
+        }
+    }
+    return userRef;
+  }
 
   export default firebase;
