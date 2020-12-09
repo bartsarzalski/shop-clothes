@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { auth } from '../../firebase/firebase.utils';
 import CartIcon from '../../components/cart-icon/cart-icon';
 import CartDropdown from '../../components/cart-dropdown/cart-dropdown';
+import { selectCartHidden } from '../../redux/cart/cart-selectors';
+import { selectCurrentUser } from '../../redux/user/user-selectors';
 
 import { ReactComponent as Logo } from '../../assets/crown.svg';
 
@@ -38,9 +40,16 @@ const Header = ({ currentUser, hidden }) => (
 }); */
 
 //Another way to destructer
-const mapStateToProps = ({user: { currentUser }, cart: { hidden }}) => ({
+/* const mapStateToProps = ({user: { currentUser }, cart: { hidden }}) => ({
     currentUser,
     hidden
+}); */
+
+//memoize way - reselect library
+
+const mapStateToProps = state => ({
+    currentUser: selectCurrentUser(state),
+    hidden: selectCartHidden(state)
 });
 
 export default connect(mapStateToProps)(Header);
