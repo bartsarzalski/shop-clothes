@@ -7,9 +7,10 @@ import './App.css';
 import HomePage from './pages/homepage/homepage';
 import ShopPage from './pages/shop/shop';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up';
-import Header from './components/header/header';
 import Contact from './pages/contact/contact';
+import CheckoutPage from './pages/checkout/checkout';
 
+import Header from './components/header/header';
 import ButtonCounter from './components/HOC/button-counter';
 import HoverCounter from './components/HOC/hover-counter';
 
@@ -67,6 +68,7 @@ class App extends Component {
           <Route exact path='/' component={HomePage} />
           <Route exact path='/shop' component={ShopPage} />
           <Route exact path='/contact' component={Contact} />
+          <Route exact path='/checkout' component={CheckoutPage} />
           <Route exact path='/signin' render={() => this.props.currentUser  
           ? ( <Redirect to='/'/> )
           : ( <SignInAndSignUpPage /> )}
